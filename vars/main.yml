@@ -19,10 +19,9 @@ _bootstrap_packages:
   Fedora: python3 sudo python3-libdnf5 python3-rpm
   'Univention Corporate Server': python3 sudo gnupg python3-apt
 
-# Map the right set of packages, based on gathered bootstrap facts.
-bootstrap_packages: "{{ _bootstrap_packages[bootstrap_distribution ~'_'~ bootstrap_distribution_major_version]|default(
-                     _bootstrap_packages[bootstrap_distribution] )|default(
-                     _bootstrap_packages[bootstrap_os_family] ) }}"
+bootstrap_facts_packages: "{{ _bootstrap_packages[ansible_facts['distribution'] ~'_'~ ansible_facts['distribution_major_version']]|default(
+                           _bootstrap_packages[ansible_facts['distribution']] )|default(
+                           _bootstrap_packages[ansible_facts['os_family']] ) }}"
 
 _bootstrap_install:
   Alpine:
